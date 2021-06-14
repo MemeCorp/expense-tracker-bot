@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   mvn_test:
     docker:
-      - image: circleci/openjdk:stretch
+      - image: circleci/openjdk:14.0.2-jdk-buster
         auth:
           username: $DOCKERHUB_USER
           password: $DOCKERHUB_PASSWORD
