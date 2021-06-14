@@ -2,6 +2,8 @@ package org.meme.corp;
 
 import java.util.Arrays;
 import lombok.extern.slf4j.Slf4j;
+import org.meme.corp.database.entity.Event;
+import org.meme.corp.database.repository.impl.EventRepository;
 import org.meme.corp.util.GraphUtil;
 
 @Slf4j
@@ -18,6 +20,9 @@ public class Main {
         /*E*/{0, 0, 0, 0, 0},
     });
     log.info(Arrays.toString(result));
+
+    EventRepository eventRepository = new EventRepository();
+    eventRepository.save(new Event(1L, "New Event"));
   }
 
 }
