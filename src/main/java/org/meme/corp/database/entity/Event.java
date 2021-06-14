@@ -1,9 +1,6 @@
 package org.meme.corp.database.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -13,8 +10,8 @@ import javax.persistence.Table;
 @Table(name = "event")
 @NoArgsConstructor
 @AllArgsConstructor
-@Setter
-@Getter
+@Data
+@Builder
 public class Event {
 
     @Id
