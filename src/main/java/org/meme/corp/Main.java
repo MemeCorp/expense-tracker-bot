@@ -20,9 +20,6 @@ public class Main {
         /*E*/{0, 0, 0, 0, 0},
     });
     log.info(Arrays.toString(result));
-
-    EventRepository eventRepository = new EventRepository();
-    eventRepository.save(new Event(1L, "New Event"));
   }
 
 }

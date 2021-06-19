@@ -5,7 +5,12 @@
              version="2.0">
     <persistence-unit name="com.meme.corp.expense_tracker">
         <description>Hibernate EntityManager Expense Tracker</description>
+        <class>org.meme.corp.database.entity.Chat</class>
+        <class>org.meme.corp.database.entity.ChatPK</class>
         <class>org.meme.corp.database.entity.Event</class>
+        <class>org.meme.corp.database.entity.Person</class>
+        <class>org.meme.corp.database.entity.PersonClient</class>
+        <class>org.meme.corp.database.entity.Transaction</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL82Dialect"/>
