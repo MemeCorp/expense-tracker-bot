@@ -1,20 +1,28 @@
 package org.meme.corp.database.repository.impl;
 
 import org.meme.corp.database.entity.Chat;
+import org.meme.corp.database.entity.ChatPK;
 import org.meme.corp.database.repository.AbstractRepository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import java.util.List;
 
-public class ChatRepository extends AbstractRepository<Chat, Long> {
+public class ChatRepository extends AbstractRepository<Chat, ChatPK> {
 
     @Override
-    public Chat findById(Long id) {
+    public Chat findById(ChatPK id) {
         EntityManager em = getEntityManager();
 
-        Chat chat = (Chat) em.createQuery("SELECT chat from Chat chat where chat.id = ?1")
-                .setParameter(1, id)
-                .getSingleResult();
+        Chat chat;
+
+        try {
+            chat = (Chat) em.createQuery("SELECT chat from Chat chat where chat.chatPK = ?1")
+                    .setParameter(1, id)
+                    .getSingleResult();
+        } catch (NoResultException ex) {
+            chat = null;
+        }
 
         return chat;
     }
@@ -46,11 +54,10 @@ public class ChatRepository extends AbstractRepository<Chat, Long> {
     public Chat update(Chat chat) {
         EntityManager em = getEntityManager();
 
-        Chat existedChat = findById(chat.getId());
+        Chat existedChat = findById(chat.getChatPK());
 
         em.detach(existedChat);
 
-        existedChat.setClientName(chat.getClientName());
         existedChat.setEvents(chat.getEvents());
 
         em.getTransaction().begin();
@@ -63,7 +70,7 @@ public class ChatRepository extends AbstractRepository<Chat, Long> {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(ChatPK id) {
         EntityManager em = getEntityManager();
 
         em.getTransaction().begin();
@@ -81,7 +88,7 @@ public class ChatRepository extends AbstractRepository<Chat, Long> {
 
         em.getTransaction().begin();
 
-        Chat chatForDelete = em.find(Chat.class, chat.getId());
+        Chat chatForDelete = em.find(Chat.class, chat.getChatPK());
 
         em.remove(chatForDelete);
 

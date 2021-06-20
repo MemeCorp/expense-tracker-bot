@@ -2,8 +2,6 @@ package org.meme.corp;
 
 import java.util.Arrays;
 import lombok.extern.slf4j.Slf4j;
-import org.meme.corp.database.entity.Event;
-import org.meme.corp.database.repository.impl.EventRepository;
 import org.meme.corp.util.GraphUtil;
 
 @Slf4j

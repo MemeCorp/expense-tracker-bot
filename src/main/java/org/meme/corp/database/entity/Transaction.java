@@ -18,7 +18,8 @@ import java.util.Set;
 public class Transaction {
 
     @Id
-    private Long id;
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private long id;
 
     private String name;
 

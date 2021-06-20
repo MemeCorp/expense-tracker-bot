@@ -4,6 +4,7 @@ import org.meme.corp.database.entity.Event;
 import org.meme.corp.database.repository.AbstractRepository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import java.util.List;
 
 public class EventRepository extends AbstractRepository<Event, Long> {
@@ -12,9 +13,15 @@ public class EventRepository extends AbstractRepository<Event, Long> {
     public Event findById(Long id) {
         EntityManager em = getEntityManager();
 
-        Event event = (Event) em.createQuery("SELECT event from Event event where event.id = ?1")
-                .setParameter(1, id)
-                .getSingleResult();
+        Event event;
+
+        try {
+            event = (Event) em.createQuery("SELECT event from Event event where event.id = ?1")
+                    .setParameter(1, id)
+                    .getSingleResult();
+        } catch (NoResultException ex) {
+            event = null;
+        }
 
         return event;
     }

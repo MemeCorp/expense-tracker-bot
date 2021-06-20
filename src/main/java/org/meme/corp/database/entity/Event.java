@@ -15,11 +15,12 @@ import java.util.Set;
 public class Event {
 
     @Id
-    private Long id;
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private long id;
 
     private String name;
 
     @OneToMany
-    @JoinColumn(name="event_id", nullable=false)
+    @JoinColumn(name="event_id")
     private Set<Transaction> transactions = new HashSet<>();
 }

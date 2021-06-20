@@ -17,7 +17,8 @@ import java.util.Set;
 public class PersonClient {
 
     @Id
-    private Long id;
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private long id;
 
     @Column(name = "client_name")
     private String clientName;

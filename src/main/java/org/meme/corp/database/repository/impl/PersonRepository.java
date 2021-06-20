@@ -4,6 +4,7 @@ import org.meme.corp.database.entity.Person;
 import org.meme.corp.database.repository.AbstractRepository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import java.util.List;
 
 public class PersonRepository extends AbstractRepository<Person, Long> {
@@ -12,9 +13,15 @@ public class PersonRepository extends AbstractRepository<Person, Long> {
     public Person findById(Long id) {
         EntityManager em = getEntityManager();
 
-        Person person = (Person) em.createQuery("SELECT person from Person person where person.id = ?1")
-                .setParameter(1, id)
-                .getSingleResult();
+        Person person;
+
+        try {
+            person = (Person) em.createQuery("SELECT person from Person person where person.id = ?1")
+                    .setParameter(1, id)
+                    .getSingleResult();
+        } catch (NoResultException ex) {
+            person = null;
+        }
 
         return person;
     }

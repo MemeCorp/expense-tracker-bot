@@ -10,7 +10,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@IdClass(ChatPK.class)
 @Table(name = "chat")
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,12 +17,9 @@ import java.util.Set;
 @Builder
 public class Chat {
 
-    @Id
-    private Long id;
-
-    @Id
-    @Column(name = "client_name")
-    private String clientName;
+    @EmbeddedId
+    //TODO specify GeneratedValue for composite key
+    private ChatPK chatPK;
 
     @ManyToMany()
     @JoinTable(
