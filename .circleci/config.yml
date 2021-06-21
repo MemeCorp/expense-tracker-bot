@@ -10,7 +10,7 @@ jobs:
           command: |
             cd /home/circleci/project/
             ls -a
-            cd /home/circleci/project/src/
+            cd /home/circleci/project/src/main/resources/db/migrations/
             ls -a
       - run:
           name: Install OpenJDK 14
