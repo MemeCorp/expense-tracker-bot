@@ -6,19 +6,6 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Check VM filesystem
-          command: |
-            cd /home/circleci/project/
-            ls -a
-            cd /home/circleci/project/src/main/
-            ls -a
-            cd /home/circleci/project/src/main/resources/
-            ls -a
-            cd /home/circleci/project/src/main/resources/db/
-            ls -a
-            cd /home/circleci/project/src/main/resources/db/migrations/
-            ls -a
-      - run:
           name: Install OpenJDK 14
           command: |
             sudo apt-get update && sudo apt-get install openjdk-14-jdk
