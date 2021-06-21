@@ -6,11 +6,6 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Check VM filesystem
-          command: |
-            sudo apt-get install tree
-            tree -a /
-      - run:
           name: Install OpenJDK 14
           command: |
             sudo apt-get update && sudo apt-get install openjdk-14-jdk
