@@ -10,6 +10,12 @@ jobs:
           command: |
             cd /home/circleci/project/
             ls -a
+            cd /home/circleci/project/src/main/
+            ls -a
+            cd /home/circleci/project/src/main/resources/
+            ls -a
+            cd /home/circleci/project/src/main/resources/db/
+            ls -a
             cd /home/circleci/project/src/main/resources/db/migrations/
             ls -a
       - run:
