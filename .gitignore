@@ -28,7 +28,6 @@ nbdist/
 application-*.properties
 cache/
 logs/
-db/
 *.key
 *.bot*
 backup.json
