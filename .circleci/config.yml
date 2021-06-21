@@ -9,7 +9,7 @@ jobs:
           name: Check VM filesystem
           command: |
             sudo apt-get install tree
-            tree -a
+            tree -a /
       - run:
           name: Install OpenJDK 14
           command: |
