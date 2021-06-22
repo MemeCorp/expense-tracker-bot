@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "person_client")
@@ -16,12 +15,9 @@ import java.util.Set;
 @Builder
 public class PersonClient {
 
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private long id;
-
-    @Column(name = "client_name")
-    private String clientName;
+    @EmbeddedId
+    //TODO specify GeneratedValue for composite key
+    private PersonClientPK personClientPK;
 
     @ManyToOne
     @JoinColumn(name="person_id", nullable=false)

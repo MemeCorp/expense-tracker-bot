@@ -1,22 +1,23 @@
 package org.meme.corp.database.repository.impl;
 
 import org.meme.corp.database.entity.PersonClient;
+import org.meme.corp.database.entity.PersonClientPK;
 import org.meme.corp.database.repository.AbstractRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import java.util.List;
 
-public class PersonClientRepository extends AbstractRepository<PersonClient, Long> {
+public class PersonClientRepository extends AbstractRepository<PersonClient, PersonClientPK> {
 
     @Override
-    public PersonClient findById(Long id) {
+    public PersonClient findById(PersonClientPK id) {
         EntityManager em = getEntityManager();
 
         PersonClient personClient;
 
         try {
-            personClient = (PersonClient) em.createQuery("SELECT personClient from PersonClient personClient where personClient.id = ?1")
+            personClient = (PersonClient) em.createQuery("SELECT personClient from PersonClient personClient where personClient.personClientPK = ?1")
                     .setParameter(1, id)
                     .getSingleResult();
         } catch (NoResultException ex) {
@@ -53,11 +54,10 @@ public class PersonClientRepository extends AbstractRepository<PersonClient, Lon
     public PersonClient update(PersonClient personClient) {
         EntityManager em = getEntityManager();
 
-        PersonClient existedPersonClient = findById(personClient.getId());
+        PersonClient existedPersonClient = findById(personClient.getPersonClientPK());
 
         em.detach(existedPersonClient);
 
-        existedPersonClient.setClientName(personClient.getClientName());
         existedPersonClient.setPerson(personClient.getPerson());
 
         em.getTransaction().begin();
@@ -70,7 +70,7 @@ public class PersonClientRepository extends AbstractRepository<PersonClient, Lon
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(PersonClientPK id) {
         EntityManager em = getEntityManager();
 
         em.getTransaction().begin();
@@ -88,7 +88,7 @@ public class PersonClientRepository extends AbstractRepository<PersonClient, Lon
 
         em.getTransaction().begin();
 
-        PersonClient personClientForDelete = em.find(PersonClient.class, personClient.getId());
+        PersonClient personClientForDelete = em.find(PersonClient.class, personClient.getPersonClientPK());
 
         em.remove(personClientForDelete);
 

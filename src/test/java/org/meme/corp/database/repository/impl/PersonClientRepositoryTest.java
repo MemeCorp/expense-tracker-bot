@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.meme.corp.database.entity.Person;
 import org.meme.corp.database.entity.PersonClient;
+import org.meme.corp.database.entity.PersonClientPK;
 import org.meme.corp.database.repository.AbstractRepositoryTest;
 
 import java.util.ArrayList;
@@ -28,14 +29,14 @@ public class PersonClientRepositoryTest extends AbstractRepositoryTest {
     public void FindByIdTest() {
         //prepare
         PersonClient personClient = PersonClient.builder()
-                .clientName(PERSON_CLIENT_TEST_NAME)
+                .personClientPK(new PersonClientPK(1L, PERSON_CLIENT_TEST_NAME))
                 .person(personRepository.save(new Person()))
                 .build();
 
         PersonClient created = personClientRepository.save(personClient);
 
         //execute
-        PersonClient found = personClientRepository.findById(created.getId());
+        PersonClient found = personClientRepository.findById(created.getPersonClientPK());
 
         //assert
         Assertions.assertEquals(created, found);
@@ -47,7 +48,7 @@ public class PersonClientRepositoryTest extends AbstractRepositoryTest {
         List<PersonClient> createdPersonClients = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
             PersonClient personClient = PersonClient.builder()
-                    .clientName(PERSON_CLIENT_TEST_NAME + i)
+                    .personClientPK(new PersonClientPK(1L + i, PERSON_CLIENT_TEST_NAME + i))
                     .person(personRepository.save(new Person()))
                     .build();
 
@@ -65,7 +66,7 @@ public class PersonClientRepositoryTest extends AbstractRepositoryTest {
     public void SaveTest() {
         //prepare
         PersonClient personClient = PersonClient.builder()
-                .clientName(PERSON_CLIENT_TEST_NAME)
+                .personClientPK(new PersonClientPK(1L, PERSON_CLIENT_TEST_NAME))
                 .person(personRepository.save(new Person()))
                 .build();
 
@@ -73,7 +74,7 @@ public class PersonClientRepositoryTest extends AbstractRepositoryTest {
         PersonClient created = personClientRepository.save(personClient);
 
         //assert
-        PersonClient found = personClientRepository.findById(created.getId());
+        PersonClient found = personClientRepository.findById(created.getPersonClientPK());
 
         Assertions.assertEquals(found, created);
     }
@@ -82,13 +83,13 @@ public class PersonClientRepositoryTest extends AbstractRepositoryTest {
     public void UpdateTest() {
         //prepare
         PersonClient personClient = PersonClient.builder()
-                .clientName(PERSON_CLIENT_TEST_NAME)
+                .personClientPK(new PersonClientPK(1L, PERSON_CLIENT_TEST_NAME))
                 .person(personRepository.save(new Person()))
                 .build();
 
         PersonClient created = personClientRepository.save(personClient);
 
-        created.setClientName(PERSON_CLIENT_TEST_NAME + "updated");
+        created.setPerson(personRepository.save(new Person()));
         //execute
 
         PersonClient updated = personClientRepository.update(created);
@@ -101,24 +102,24 @@ public class PersonClientRepositoryTest extends AbstractRepositoryTest {
     public void DeleteByIdTest() {
         //prepare
         PersonClient personClient = PersonClient.builder()
-                .clientName(PERSON_CLIENT_TEST_NAME)
+                .personClientPK(new PersonClientPK(1L, PERSON_CLIENT_TEST_NAME))
                 .person(personRepository.save(new Person()))
                 .build();
 
         PersonClient created = personClientRepository.save(personClient);
 
         //execute
-        personClientRepository.deleteById(created.getId());
+        personClientRepository.deleteById(created.getPersonClientPK());
 
         //assert
-        Assertions.assertNull(personClientRepository.findById(created.getId()));
+        Assertions.assertNull(personClientRepository.findById(created.getPersonClientPK()));
     }
 
     @Test
     public void DeleteTest() {
         //prepare
         PersonClient personClient = PersonClient.builder()
-                .clientName(PERSON_CLIENT_TEST_NAME)
+                .personClientPK(new PersonClientPK(1L, PERSON_CLIENT_TEST_NAME))
                 .person(personRepository.save(new Person()))
                 .build();
 
@@ -128,6 +129,6 @@ public class PersonClientRepositoryTest extends AbstractRepositoryTest {
         personClientRepository.delete(created);
 
         //assert
-        Assertions.assertNull(personClientRepository.findById(created.getId()));
+        Assertions.assertNull(personClientRepository.findById(created.getPersonClientPK()));
     }
 }
