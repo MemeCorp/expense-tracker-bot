@@ -91,16 +91,17 @@
 
     <build>
         <plugins>
-<!--            TODO make it works on circleci-->
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-compiler-plugin</artifactId>-->
-<!--                <configuration>-->
-<!--                    <compilerArgs>-->
-<!--                        &#45;&#45;enable-preview-->
-<!--                    </compilerArgs>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <compilerArgs>
+                        <compilerArg>
+                            --enable-preview
+                        </compilerArg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
             <!-- Make this jar executable -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
