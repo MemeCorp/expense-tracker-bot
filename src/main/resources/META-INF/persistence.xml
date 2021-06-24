@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+             version="2.0">
+    <persistence-unit name="com.meme.corp.expense_tracker">
+        <description>Hibernate EntityManager Expense Tracker</description>
+        <class>org.meme.corp.database.entity.Chat</class>
+        <class>org.meme.corp.database.entity.ChatPK</class>
+        <class>org.meme.corp.database.entity.Event</class>
+        <class>org.meme.corp.database.entity.Person</class>
+        <class>org.meme.corp.database.entity.PersonClient</class>
+        <class>org.meme.corp.database.entity.Transaction</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <properties>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL82Dialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="validate"/>
+            <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+            <property name="javax.persistence.jdbc.url" value="${hibernate_url}"/>
+            <property name="javax.persistence.jdbc.user" value="${hibernate_user}"/>
+            <property name="javax.persistence.jdbc.password" value="${hibernate_password}"/>
+        </properties>
+    </persistence-unit>
+</persistence>
