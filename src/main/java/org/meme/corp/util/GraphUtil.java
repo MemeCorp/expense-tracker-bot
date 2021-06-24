@@ -1,5 +1,9 @@
 package org.meme.corp.util;
 
+import org.meme.corp.model.Transaction;
+
+import java.util.List;
+
 public final class GraphUtil {
 
   public static float[] calculateBalances(float[][] expenses) {
@@ -14,6 +18,10 @@ public final class GraphUtil {
       }
     }
     return result;
+  }
+
+  public static float[][] transactionsToGraph(List<Transaction> transactions) {
+    return new float[0][0];
   }
 
 }
