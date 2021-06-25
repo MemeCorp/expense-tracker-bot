@@ -1,6 +1,6 @@
 package org.meme.corp.model;
 
-import java.util.List;
+import java.util.Map;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,6 +14,6 @@ public class Transaction {
 
     private float sum;
     private User owner;
-    private List<User> participants;
+    private Map<User, Float> participants;
 
 }

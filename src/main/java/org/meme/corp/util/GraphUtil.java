@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.meme.corp.model.Event;
@@ -33,9 +34,15 @@ public final class GraphUtil {
     transactions.forEach(transaction -> {
       final User owner = transaction.getOwner();
       final int ownerIndex = userList.indexOf(owner);
-      final List<User> participants = transaction.getParticipants();
-      final float expensePerParticipant = transaction.getSum() / participants.size();
-      participants.forEach(participant -> {
+      final Map<User, Float> participants = transaction.getParticipants();
+      AtomicReference<Float> sum = new AtomicReference<>(transaction.getSum());
+      participants.forEach((participant, amount) -> {
+        final int participantIndex = userList.indexOf(participant);
+        expenses[ownerIndex][participantIndex] += amount;
+        sum.updateAndGet(v -> v - amount);
+      });
+      final float expensePerParticipant = sum.get() / participants.size();
+      participants.keySet().forEach(participant -> {
         final int participantIndex = userList.indexOf(participant);
         expenses[ownerIndex][participantIndex] += expensePerParticipant;
       });
@@ -44,13 +51,12 @@ public final class GraphUtil {
   }
 
   private static List<User> getUserList(List<Transaction> transactions) {
-    final List<User> userList = transactions.stream()
+    return transactions.stream()
         .flatMap(transaction -> Stream.concat(
             Stream.of(transaction.getOwner()),
-            transaction.getParticipants().stream()))
+            transaction.getParticipants().keySet().stream()))
         .distinct()
         .collect(Collectors.toList());
-    return userList;
   }
 
   private static float[] calculateBalances(float[][] expenses) {
@@ -111,7 +117,7 @@ public final class GraphUtil {
       }
       //check if balances are already calculated
       for (float balance : balances) {
-        if (balance != 0) {
+        if (Math.round(balance * 1000) / 1000 != 0) {
           finished = false;
           break;
         }
