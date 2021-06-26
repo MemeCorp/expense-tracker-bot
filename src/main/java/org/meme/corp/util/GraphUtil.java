@@ -138,6 +138,9 @@ public final class GraphUtil {
         }
       }
     }
+    result.values().forEach(map ->
+        map.forEach((user, payment) ->
+            map.put(user, Math.round(payment * 100f) / 100f)));
     return result;
   }
 
