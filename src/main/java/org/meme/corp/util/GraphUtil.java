@@ -41,11 +41,14 @@ public final class GraphUtil {
         expenses[ownerIndex][participantIndex] += amount;
         sum.updateAndGet(v -> v - amount);
       });
-      final float expensePerParticipant = sum.get() / participants.size();
-      participants.keySet().forEach(participant -> {
-        final int participantIndex = userList.indexOf(participant);
-        expenses[ownerIndex][participantIndex] += expensePerParticipant;
-      });
+      final Float finalSum = sum.get();
+      if (finalSum > 0) {
+        final float expensePerParticipant = finalSum / participants.size();
+        participants.keySet().forEach(participant -> {
+          final int participantIndex = userList.indexOf(participant);
+          expenses[ownerIndex][participantIndex] += expensePerParticipant;
+        });
+      }
     });
     return expenses;
   }
