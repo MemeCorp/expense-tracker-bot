@@ -1,11 +1,10 @@
 package org.meme.corp.database.repository.impl;
 
-import org.meme.corp.database.entity.Event;
-import org.meme.corp.database.repository.AbstractRepository;
-
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-import java.util.List;
+import org.meme.corp.database.entity.Event;
+import org.meme.corp.database.repository.AbstractRepository;
 
 public class EventRepository extends AbstractRepository<Event, Long> {
 
@@ -31,7 +30,17 @@ public class EventRepository extends AbstractRepository<Event, Long> {
         EntityManager em = getEntityManager();
 
         List<Event> events = em.createQuery("SELECT event from Event event")
-                .getResultList();
+            .getResultList();
+
+        return events;
+    }
+
+    //TODO
+    public List<Event> findAllByChatId(Long chatId) {
+        EntityManager em = getEntityManager();
+
+        List<Event> events = em.createQuery("SELECT event from Event event")
+            .getResultList();
 
         return events;
     }

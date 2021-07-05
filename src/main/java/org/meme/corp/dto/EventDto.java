@@ -1,0 +1,18 @@
+package org.meme.corp.dto;
+
+import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class EventDto {
+
+    private String name;
+    private String chatId;
+    private List<TransactionDto> transactions;
+}
