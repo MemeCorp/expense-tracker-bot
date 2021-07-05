@@ -1,98 +1,108 @@
 package org.meme.corp.database.repository.impl;
 
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import org.meme.corp.database.entity.Transaction;
 import org.meme.corp.database.repository.AbstractRepository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import java.util.List;
-
 public class TransactionRepository extends AbstractRepository<Transaction, Long> {
 
-    @Override
-    public Transaction findById(Long id) {
-        EntityManager em = getEntityManager();
+  @Override
+  public Transaction findById(Long id) {
+    EntityManager em = getEntityManager();
 
-        Transaction transaction;
+    Transaction transaction;
 
-        try {
-            transaction = (Transaction) em.createQuery("SELECT transaction from Transaction transaction where transaction.id = ?1")
-                    .setParameter(1, id)
-                    .getSingleResult();
-        } catch (NoResultException ex) {
-            transaction = null;
-        }
-
-        return transaction;
+    try {
+      transaction = (Transaction) em.createQuery(
+              "SELECT transaction from Transaction transaction where transaction.id = ?1")
+          .setParameter(1, id)
+          .getSingleResult();
+    } catch (NoResultException ex) {
+      transaction = null;
     }
 
-    @Override
-    public List<Transaction> findAll() {
-        EntityManager em = getEntityManager();
+    return transaction;
+  }
 
-        List<Transaction> transactions = em.createQuery("SELECT transaction from Transaction transaction")
-                .getResultList();
+  public List<Transaction> findByEventId(Long eventId) {
+    EntityManager em = getEntityManager();
 
-        return transactions;
-    }
+    List<Transaction> resultList = em.createQuery("SELECT t from Transaction t where t.eventId = ?1")
+        .setParameter(1, eventId)
+        .getResultList();
 
-    @Override
-    public Transaction save(Transaction transaction) {
-        EntityManager em = getEntityManager();
+    return resultList;
+  }
 
-        em.getTransaction().begin();
+  @Override
+  public List<Transaction> findAll() {
+    EntityManager em = getEntityManager();
 
-        em.persist(transaction);
+    List<Transaction> transactions = em.createQuery("SELECT transaction from Transaction transaction")
+        .getResultList();
 
-        em.getTransaction().commit();
+    return transactions;
+  }
 
-        return transaction;
-    }
+  @Override
+  public Transaction save(Transaction transaction) {
+    EntityManager em = getEntityManager();
 
-    @Override
-    public Transaction update(Transaction transaction) {
-        EntityManager em = getEntityManager();
+    em.getTransaction().begin();
 
-        Transaction existedTransaction = findById(transaction.getId());
+    em.persist(transaction);
 
-        em.detach(existedTransaction);
+    em.getTransaction().commit();
 
-        existedTransaction.setName(transaction.getName());
-        existedTransaction.setOwner(transaction.getOwner());
-        existedTransaction.setPersons(transaction.getPersons());
+    return transaction;
+  }
 
-        em.getTransaction().begin();
+  @Override
+  public Transaction update(Transaction transaction) {
+    EntityManager em = getEntityManager();
 
-        em.merge(existedTransaction);
+    Transaction existedTransaction = findById(transaction.getId());
 
-        em.getTransaction().commit();
+    em.detach(existedTransaction);
 
-        return transaction;
-    }
+    existedTransaction.setName(transaction.getName());
+    existedTransaction.setOwner(transaction.getOwner());
+    existedTransaction.setPersons(transaction.getPersons());
 
-    @Override
-    public void deleteById(Long id) {
-        EntityManager em = getEntityManager();
+    em.getTransaction().begin();
 
-        em.getTransaction().begin();
+    em.merge(existedTransaction);
 
-        Transaction transaction = em.find(Transaction.class, id);
+    em.getTransaction().commit();
 
-        em.remove(transaction);
+    return transaction;
+  }
 
-        em.getTransaction().commit();
-    }
+  @Override
+  public void deleteById(Long id) {
+    EntityManager em = getEntityManager();
 
-    @Override
-    public void delete(Transaction transaction) {
-        EntityManager em = getEntityManager();
+    em.getTransaction().begin();
 
-        em.getTransaction().begin();
+    Transaction transaction = em.find(Transaction.class, id);
 
-        Transaction transactionForDelete = em.find(Transaction.class, transaction.getId());
+    em.remove(transaction);
 
-        em.remove(transactionForDelete);
+    em.getTransaction().commit();
+  }
 
-        em.getTransaction().commit();
-    }
+  @Override
+  public void delete(Transaction transaction) {
+    EntityManager em = getEntityManager();
+
+    em.getTransaction().begin();
+
+    Transaction transactionForDelete = em.find(Transaction.class, transaction.getId());
+
+    em.remove(transactionForDelete);
+
+    em.getTransaction().commit();
+  }
 }
