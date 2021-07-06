@@ -27,11 +27,11 @@ class GraphUtilTest {
   @Test
   void shouldCalculateTransactions() {
     //given
-    final User userA = new User("A");
-    final User userB = new User("B");
-    final User userC = new User("C");
-    final User userD = new User("D");
-    final User userE = new User("E");
+    final User userA = new User(null, null, "A");
+    final User userB = new User(null, null, "B");
+    final User userC = new User(null, null, "C");
+    final User userD = new User(null, null, "D");
+    final User userE = new User(null, null, "E");
     final List<Transaction> givenTransactionList = List.of(Transaction.builder()
             .sum(500)
             .owner(userA)
@@ -65,10 +65,10 @@ class GraphUtilTest {
   @Test
   void shouldCalculateTransactionsWithPartialAmounts() {
     //given
-    final User userA = new User("A");
-    final User userB = new User("B");
-    final User userC = new User("C");
-    final User userD = new User("D");
+    final User userA = new User(null, null, "A");
+    final User userB = new User(null, null, "B");
+    final User userC = new User(null, null, "C");
+    final User userD = new User(null, null, "D");
     final List<Transaction> givenTransactionList = List.of(
         Transaction.builder()
             .sum(596.2f)
